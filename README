@@ -1,0 +1,12 @@
+First iteration of a Discord bot to retrieve users in a channel, sort and make groups. 
+
+Roles in Discord must be set to use.
+
+Roles it sorts by:
+Defense
+Flex 1
+Flex 2
+PA
+Tank
+
+It will fill with remaining members.
