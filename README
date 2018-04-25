@@ -1,12 +1,10 @@
-First iteration of a Discord bot to retrieve users in a channel, sort and make groups. 
+Discord Bot for use in guilds
 
-Roles in Discord must be set to use.
+Currently it will take all voice members logged into any channel except a channel
+named "AFK". It will output this list in an alphabetically sorted list that can be
+used in a spreadsheet.
 
-Roles it sorts by:
-Defense
-Flex 1
-Flex 2
-PA
-Tank
+Grouping System works by Discord Tags, standard tags are 'Defense','Flex 1','Flex 2'.
+Any members without these tags will be broken into groups of 5 without priority.
 
-It will fill with remaining members.
+It will also split a group called 'PA' in half to make two groups.
