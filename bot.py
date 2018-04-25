@@ -1,35 +1,48 @@
-import discord
 import asyncio
 import platform
 import sys
+sys.path.insert(0, "lib")
+import json
+
 
 try:
     from discord.ext import commands
-except Import Error:
+    from discord.ext.commands import Bot
+    import discord
+except ImportError:
     print('Discord.py is not installed.')
     sys.exit(1)
 
-from settings import settings
+#Load Settings
+with open("settings/settings.json") as cfg:
+    settings = json.load(cfg)
+
+token        = settings["token"]
+prefix       = settings["command_prefix"]
+
 
 # Modify Bot Description, Prefix, and if it will direct message help.
-description = "Royal Bot by Mystykall."
+bot = Bot(command_prefix=prefix, pm_help = False, description="Royal Bot with Cheese")
+
+bot.load_extension(f'modules.attendance')
+bot.load_extension(f'modules.grouping')
 
 
-
-@client.event
+@bot.event
 async def on_ready():
-	print('Logged in as '+client.user.name+' (ID:'+client.user.id+') | Connected to '+str(len(client.servers))+' servers | Connected to '+str(len(set(client.get_all_members())))+' users')
+	print('Logged in as '+bot.user.name+' (ID:'+bot.user.id+') | Connected to '+str(len(bot.servers))+' servers | Connected to '+str(len(set(bot.get_all_members())))+' users')
 	print('--------')
 	print('Current Discord.py Version: {} | Current Python Version: {}'.format(discord.__version__, platform.python_version()))
 	print('--------')
-	print('Use this link to invite {}:'.format(client.user.name))
-	print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(client.user.id))
+	print('Use this link to invite {}:'.format(bot.user.name))
+	print('https://discordapp.com/oauth2/authorize?client_id={}&scope=bot&permissions=8'.format(bot.user.id))
 	print('--------')
 	print('Created by Mystykall')
-	return await client.change_presence(game=discord.Game(name='Someone set us up the groups.'))
+	return await bot.change_presence(game=discord.Game(name='Bring a litte class'))
 
-#Load the Modules
-from modules import grouping
-from modules import attendance
+@bot.command()
+async def ping():
+    await bot.say("Pong!")
 
-client.run('Enter Discord Token Here')
+
+bot.run(token)
